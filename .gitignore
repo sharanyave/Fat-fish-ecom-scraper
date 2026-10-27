@@ -1,0 +1,62 @@
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Build outputs
+dist/
+**/dist/
+build/
+**/build/
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+!.env.sample
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+*.log
+
+# macOS
+.DS_Store
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# TypeScript build cache
+*.tsbuildinfo
+
+# Capacitor / native build outputs
+mobile-ionic/android/.gradle/
+mobile-ionic/android/local.properties
+mobile-ionic/android/**/build/
+mobile-ionic/ios/App/Pods/
+mobile-ionic/ios/App/build/
+mobile-ionic/ios/DerivedData/
+mobile-ionic/ios/*.xcworkspace/xcuserdata/
+mobile-ionic/ios/*.xcodeproj/xcuserdata/
+
+# Signing credentials and private keys
+*.keystore
+*.jks
+*.p12
+*.mobileprovision
+*.provisionprofile
+*.p8
+*.p12
+*.cer
+*.key
+
+# Original scraper generated outputs
+fat-fish-product-extractor-source/coverage/
+fat-fish-product-extractor-source/.env
+
+# IDE project settings
+.idea/
+**/.idea/

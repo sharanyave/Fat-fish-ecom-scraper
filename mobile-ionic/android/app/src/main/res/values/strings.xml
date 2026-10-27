@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Product Data Extractor</string>
+    <string name="title_activity_main">Product Data Extractor</string>
+    <string name="package_name">com.sharanya.productextractor</string>
+    <string name="custom_url_scheme">com.sharanya.productextractor</string>
+</resources>
