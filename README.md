@@ -1,138 +1,79 @@
-# Product Data Extractor
+# Ionic + Capacitor Product Data Extractor
 
-A lightweight e-commerce product data extraction demo built with **React, TypeScript, Node.js, Express, and Cheerio**.
+A cross-platform UI demo built with **Ionic React, TypeScript, Vite, and Capacitor**. It connects to the existing Express extraction API in the parent `server` project.
 
-The application demonstrates how publicly accessible product pages can be inspected to extract structured product information, including product names, prices, descriptions, images, and product URLs.
+This is a portfolio demonstration of Ionic's mobile-first component system and Capacitor's native app runtime. It is not an archived Fat Fish Marketing deliverable.
 
-> **Portfolio project:** This is a retrospective demonstration inspired by web development and e-commerce use cases from my time at Fat Fish Marketing (2018–2019). It is not represented as the original source code or an archived company deliverable.
+## What this demonstrates
 
-## Features
+- Ionic React components for a responsive, mobile-first interface
+- React and TypeScript application structure
+- Capacitor runtime detection using `Capacitor.getPlatform()` and `Capacitor.isNativePlatform()`
+- API integration with an Express backend
+- Product search/filtering and JSON export
+- A demo mode that works without a live extraction request
 
-- **Product extraction:** Extract product information from supported public product pages.
-- **Structured data parsing:** Read Product schema data from JSON-LD where available.
-- **Web interface:** React and TypeScript frontend for submitting product URLs and viewing results.
-- **Backend API:** Node.js and Express API for processing extraction requests.
-- **Data export:** Export extracted results as JSON or CSV.
-- **Input validation:** Validate submitted URLs before processing.
-- **Demo data:** Explore sample product records without relying on a live website.
-- **Request safeguards:** Includes basic request timeouts, response-size limits, and rate limiting.
+## Prerequisites
 
-## Technology Stack
+- Node.js 20+ and npm
+- For Android builds: Android Studio and Android SDK
+- For iOS builds: macOS and Xcode
 
-| Area | Technology |
-|---|---|
-| Frontend | React, TypeScript, Vite |
-| Backend | Node.js, Express, TypeScript |
-| HTML parsing | Cheerio |
-| Data extraction | JSON-LD structured data |
-| Data formats | JSON, CSV |
-| Development | npm |
+## Run the Ionic web preview
 
-## Architecture
-
-```text
-React + TypeScript UI
-        |
-        | HTTP request
-        v
-Express API
-        |
-        v
-URL validation and request controls
-        |
-        v
-Public product page
-        |
-        v
-Cheerio + JSON-LD parsing
-        |
-        v
-Structured product data
-        |
-        v
-UI results / JSON / CSV export
-```
-
-## Getting Started
-
-### Prerequisites
-
-- Node.js and npm
-- Internet access for extracting data from permitted public URLs
-
-Check your installed versions:
+From this directory:
 
 ```bash
-node --version
-npm --version
+npm install
+npm run dev
 ```
 
-### Installation
+Open `http://localhost:8100`. Demo records load by default.
 
-Clone the repository:
+## Connect the backend
+
+In another terminal, start the Express API:
 
 ```bash
-git clone https://github.com/sharanyave/Fat-fish-ecom-scraper.git
-cd Fat-fish-ecom-scraper
+cd ../server
+npm install
+CLIENT_ORIGIN=http://localhost:8100 npm run dev
 ```
 
-Install the frontend and backend dependencies using the instructions in their respective `package.json` files and the project directory structure.
+The API defaults to port 3001. For a remote or deployed API, create `.env.local` in this directory:
 
-### Running the Application
-
-Start the backend API and frontend development server using the scripts defined in their respective `package.json` files.
-
-Check the terminal output for the local URLs and ensure the frontend is configured to call the backend API.
-
-*Exact commands and ports should be documented here once the project has been installed and verified locally.*
-
-## Example Output
-
-A successful extraction may return a record similar to the following:
-
-```json
-{
-  "name": "Demo Cotton T-Shirt",
-  "price": "24.99",
-  "currency": "EUR",
-  "description": "A sample product description.",
-  "image": "https://example.com/product-image.jpg",
-  "url": "https://example.com/products/demo-shirt"
-}
+```bash
+VITE_API_BASE_URL=https://your-api-host.example
 ```
 
-This is illustrative demo data, not a live extraction result. Actual fields depend on the page's HTML and structured data.
+Restart Vite after changing environment variables. Never put secrets in `VITE_*` variables; these are bundled into the client.
 
-## Limitations
+## Build and package for native platforms
 
-- Product data extraction depends on the structure and availability of the target page.
-- Not every website publishes JSON-LD Product data.
-- Prices, currency, availability, and other fields may be missing or represented differently across websites.
-- The application is a demonstration and has not been independently verified for production deployment.
-- Website terms, access restrictions, and applicable laws must be respected.
+```bash
+npm run build
+npx cap add android
+npx cap sync android
+npx cap open android
+```
 
-## Responsible Use
+For iOS on macOS with Xcode:
 
-Use this project only with websites and data you are authorised to access.
+```bash
+npx cap add ios
+npx cap sync ios
+npx cap open ios
+```
 
-- Prefer official APIs, product feeds, or documented data access methods where available.
-- Respect website terms of service and applicable privacy and copyright requirements.
-- Do not attempt to bypass authentication, CAPTCHAs, paywalls, or anti-bot controls.
-- Before production use, implement robust SSRF protections, destination and redirect validation, network-level egress restrictions, and appropriate monitoring.
+Run `npx cap add android` and/or `npx cap add ios` only once per platform; these commands generate native project directories. After changing web code, run `npm run build` and `npx cap sync`.
 
-## Future Improvements
+## Native API integration
 
-- Support additional product schema formats and HTML fallbacks.
-- Add automated tests for extraction and validation.
-- Improve error handling for unsupported pages and missing fields.
-- Add pagination and batch processing with appropriate limits.
-- Introduce a persistent extraction history and downloadable reports.
-- Add deployment configuration and CI checks.
+The app uses `Capacitor.getPlatform()` and `Capacitor.isNativePlatform()` to show the current runtime. You can extend it with Capacitor plugins such as Camera or Preferences and sync the native projects.
 
-## Project Context
+## Notes and limitations
 
-This project demonstrates practical skills in frontend development, backend API design, HTML parsing, structured data extraction, and data export. It is intended as a portfolio exercise and is not affiliated with or endorsed by Fat Fish Marketing.
-
-## License
-
-No licence has been specified yet. Add a `LICENSE` file before explicitly permitting reuse or redistribution.
+- Live extraction requires the Express API to be running and reachable from the device. On a physical phone, `localhost` means the phone itself, not your development computer.
+- A physical device needs a deployed HTTPS API or a reachable development-machine LAN address.
+- Public page extraction must respect site terms and access restrictions. Do not bypass authentication, CAPTCHAs, paywalls, or anti-bot controls.
+- The source is provided as a portfolio starter; native builds and device behavior still need to be verified in Android Studio/Xcode.
