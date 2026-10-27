@@ -1,0 +1,13 @@
+{
+  "name": "product-scraper-dashboard",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Demo dashboard for extracting public product data from permitted e-commerce pages.",
+  "workspaces": ["client", "server"],
+  "scripts": {
+    "dev": "concurrently -k \"npm run dev -w server\" \"npm run dev -w client\"",
+    "build": "npm run build -w client && npm run build -w server",
+    "start": "npm run start -w server"
+  },
+  "devDependencies": { "concurrently": "^9.1.2" }
+}
